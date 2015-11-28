@@ -2218,7 +2218,6 @@ void t_csharp_generator::generate_deserialize_container(ofstream& out,
     obj = tmp("_list");
   }
 
-  indent(out) << prefix << " = new " << type_name(ttype, false, true) << "();" << endl;
   if (ttype->is_map()) {
     out << indent() << "TMap " << obj << " = iprot.ReadMapBegin();" << endl;
   } else if (ttype->is_set()) {
@@ -2226,6 +2225,9 @@ void t_csharp_generator::generate_deserialize_container(ofstream& out,
   } else if (ttype->is_list()) {
     out << indent() << "TList " << obj << " = iprot.ReadListBegin();" << endl;
   }
+
+  indent(out) << prefix << " = new " << type_name(ttype, false, true) <<
+    "(" << obj << ".Count);" << endl;
 
   string i = tmp("_i");
   indent(out) << "for( int " << i << " = 0; " << i << " < " << obj << ".Count"
@@ -2644,14 +2646,14 @@ string t_csharp_generator::type_name(t_type* ttype,
     return base_type_name((t_base_type*)ttype, in_container, in_param, is_required);
   } else if (ttype->is_map()) {
     t_map* tmap = (t_map*)ttype;
-    return "Dictionary<" + type_name(tmap->get_key_type(), true) + ", "
+    return (string)(!in_init ? "I" : "") + "Dictionary<" + type_name(tmap->get_key_type(), true) + ", "
            + type_name(tmap->get_val_type(), true) + ">";
   } else if (ttype->is_set()) {
     t_set* tset = (t_set*)ttype;
-    return "THashSet<" + type_name(tset->get_elem_type(), true) + ">";
+    return (string)(!in_init ? "I" : "T") + "HashSet<" + type_name(tset->get_elem_type(), true) + ">";
   } else if (ttype->is_list()) {
     t_list* tlist = (t_list*)ttype;
-    return "List<" + type_name(tlist->get_elem_type(), true) + ">";
+    return (string)(!in_init ? "I" : "") + "List<" + type_name(tlist->get_elem_type(), true) + ">";
   }
 
   t_program* program = ttype->get_program();
