@@ -2650,7 +2650,7 @@ string t_csharp_generator::type_name(t_type* ttype,
            + type_name(tmap->get_val_type(), true) + ">";
   } else if (ttype->is_set()) {
     t_set* tset = (t_set*)ttype;
-    return (string)(!in_init ? "I" : "T") + "HashSet<" + type_name(tset->get_elem_type(), true) + ">";
+    return (string)(!in_init ? "ICollection" : "THashSet") + "<" + type_name(tset->get_elem_type(), true) + ">";
   } else if (ttype->is_list()) {
     t_list* tlist = (t_list*)ttype;
     return (string)(!in_init ? "I" : "") + "List<" + type_name(tlist->get_elem_type(), true) + ">";

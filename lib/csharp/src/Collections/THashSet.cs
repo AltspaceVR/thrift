@@ -34,17 +34,25 @@ namespace Thrift.Collections
 #endif
     public class THashSet<T> : ICollection<T>
     {
-#if NET_2_0 || SILVERLIGHT
+
 #if SILVERLIGHT
         [DataMember]
 #endif
-        TDictSet<T> set = new TDictSet<T>();
-#else
-        HashSet<T> set = new HashSet<T>();
-#endif
+        private readonly Dictionary<T, THashSet<T>> dict;
+
+        public THashSet()
+        {
+            dict = new Dictionary<T, THashSet<T>>();
+        }
+
+        public THashSet(int capacity)
+        {
+            dict = new Dictionary<T, THashSet<T>>(capacity);
+        }
+
         public int Count
         {
-            get { return set.Count; }
+            get { return dict.Count; }
         }
 
         public bool IsReadOnly
@@ -52,109 +60,48 @@ namespace Thrift.Collections
             get { return false; }
         }
 
-        public void Add(T item)
-        {
-            set.Add(item);
-        }
-
-        public void Clear()
-        {
-            set.Clear();
-        }
-
-        public bool Contains(T item)
-        {
-            return set.Contains(item);
-        }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            set.CopyTo(array, arrayIndex);
-        }
-
         public IEnumerator GetEnumerator()
         {
-            return set.GetEnumerator();
+            return ((IEnumerable)dict.Keys).GetEnumerator();
         }
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            return ((IEnumerable<T>)set).GetEnumerator();
+            return dict.Keys.GetEnumerator();
+        }
+
+        public bool Add(T item)
+        {
+            if (dict.ContainsKey(item)) return false;
+
+            dict[item] = this;
+            return true;
+        }
+
+        void ICollection<T>.Add(T item)
+        {
+            Add(item);
+        }
+
+        public void Clear()
+        {
+            dict.Clear();
+        }
+
+        public bool Contains(T item)
+        {
+            return dict.ContainsKey(item);
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            dict.Keys.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(T item)
         {
-            return set.Remove(item);
+            return dict.Remove(item);
         }
-
-#if NET_2_0 || SILVERLIGHT
-#if SILVERLIGHT
-        [DataContract]
-#endif
-        private class TDictSet<V> : ICollection<V>
-        {
-#if SILVERLIGHT
-            [DataMember]
-#endif
-            Dictionary<V, TDictSet<V>> dict = new Dictionary<V, TDictSet<V>>();
-
-            public int Count
-            {
-                get { return dict.Count; }
-            }
-
-            public bool IsReadOnly
-            {
-                get { return false; }
-            }
-
-            public IEnumerator GetEnumerator()
-            {
-                return ((IEnumerable)dict.Keys).GetEnumerator();
-            }
-
-            IEnumerator<V> IEnumerable<V>.GetEnumerator()
-            {
-                return dict.Keys.GetEnumerator();
-            }
-
-            public bool Add(V item)
-            {
-                if (!dict.ContainsKey(item))
-                {
-                    dict[item] = this;
-                    return true;
-                }
-
-                return false;
-            }
-
-            void ICollection<V>.Add(V item)
-            {
-                Add(item);
-            }
-
-            public void Clear()
-            {
-                dict.Clear();
-            }
-
-            public bool Contains(V item)
-            {
-                return dict.ContainsKey(item);
-            }
-
-            public void CopyTo(V[] array, int arrayIndex)
-            {
-                dict.Keys.CopyTo(array, arrayIndex);
-            }
-
-            public bool Remove(V item)
-            {
-                return dict.Remove(item);
-            }
-        }
-#endif
     }
 
 }
