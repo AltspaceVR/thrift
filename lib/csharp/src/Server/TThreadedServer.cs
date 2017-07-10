@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information
@@ -19,7 +19,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
+//using System.Threading;
+using Thrift.TaskThread;
+using Monitor = System.Threading.Monitor;
 using Thrift.Collections;
 using Thrift.Protocol;
 using Thrift.Transport;

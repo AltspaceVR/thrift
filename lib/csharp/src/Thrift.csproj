@@ -17,7 +17,7 @@
   specific language governing permissions and limitations
   under the License.
 -->
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -27,7 +27,7 @@
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>Thrift</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Thrift</RootNamespace>
     <FileUpgradeFlags>
@@ -49,6 +49,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,6 +60,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -68,6 +70,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -79,6 +82,9 @@
   <ItemGroup>
     <Compile Include="Collections\TCollections.cs" />
     <Compile Include="Collections\THashSet.cs" />
+    <Compile Include="TaskThread\Enums.cs" />
+    <Compile Include="TaskThread\Exceptions.cs" />
+    <Compile Include="TaskThread\Thread.cs" />
     <Compile Include="TControllingHandler.cs" />
     <Compile Include="TProcessorFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
