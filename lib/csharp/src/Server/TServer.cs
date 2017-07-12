@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information
@@ -59,7 +59,8 @@ namespace Thrift.Server
     }
     protected static void DefaultLogDelegate(string s)
     {
-      Console.Error.WriteLine(s);
+      //Console.Error.WriteLine(s);
+      System.Diagnostics.Debug.WriteLine(s);
     }
 
     //Construction

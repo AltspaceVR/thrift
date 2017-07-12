@@ -105,7 +105,6 @@
     <Compile Include="Protocol\TType.cs" />
     <Compile Include="TPrototypeProcessorFactory.cs" />
     <Compile Include="TSingletonProcessorFactory.cs" />
-    <Compile Include="Server\TThreadedServer.cs" />
     <Compile Include="Server\TServer.cs" />
     <Compile Include="Server\TServerEventHandler.cs" />
     <Compile Include="Server\TSimpleServer.cs" />

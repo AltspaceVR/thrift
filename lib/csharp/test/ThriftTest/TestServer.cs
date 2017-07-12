@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information
@@ -394,7 +394,7 @@ namespace Test
         private enum ServerType
         {
             TSimpleServer,
-            TThreadedServer,
+            //TThreadedServer,
             TThreadPoolServer,
         }
 
@@ -439,10 +439,10 @@ namespace Test
                     {
                         json = true;
                     }
-                    else if (args[i] == "--threaded" || args[i] == "--server-type=threaded")
-                    {
-                        serverType = ServerType.TThreadedServer;
-                    }
+                    //else if (args[i] == "--threaded" || args[i] == "--server-type=threaded")
+                    //{
+                        //serverType = ServerType.TThreadedServer;
+                    //}
                     else if (args[i] == "--threadpool" || args[i] == "--server-type=threadpool")
                     {
                         serverType = ServerType.TThreadPoolServer;
@@ -509,9 +509,9 @@ namespace Test
                     case ServerType.TThreadPoolServer:
                         serverEngine = new TThreadPoolServer(processorFactory, trans, transFactory, proto);
                         break;
-                    case ServerType.TThreadedServer:
-                        serverEngine = new TThreadedServer(processorFactory, trans, transFactory, proto);
-                        break;
+                    //case ServerType.TThreadedServer:
+                        //serverEngine = new TThreadedServer(processorFactory, trans, transFactory, proto);
+                        //break;
                     default:
                         serverEngine = new TSimpleServer(processorFactory, trans, transFactory, proto);
                         break;
